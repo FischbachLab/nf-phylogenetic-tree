@@ -1,5 +1,5 @@
 #!/usr/bin/env nextflow
-nextflow.enable.dsl=1
+nextflow.enable.dsl=2
 // If the user uses the --help flag, print the help text below
 params.help = false
 
@@ -48,12 +48,6 @@ def outdir1  = "${params.outdir}"
 println outdir1
 
 
-Channel
- .fromPath(params.fasta)
- .ifEmpty { exit 1, "Cannot find the input fasta file matching: ${params.fasta}." }
- .set { fasta_ch }
-
-
 /*
  process get_mafft_help_message {
 
@@ -83,10 +77,10 @@ Channel
      publishDir "${params.outdir}/${params.project}/mafft/", mode:'copy'
 
      input:
-     path fa from fasta_ch
+     path fa
 
      output:
-     path "aligned_*.aln" into aln_ch
+     path "aligned_*.aln"
 
 
      script:
@@ -112,10 +106,10 @@ Generate a tree file
      publishDir "${params.outdir}/${params.project}/tree", mode:'copy', pattern: 'RAxML_bestTree.*'
 
      input:
-     file aln from aln_ch
+     file aln
 
      output:
-     file "RAxML_bestTree.*" into tree_ch
+     file "RAxML_bestTree.*"
 
      script:
      """
@@ -137,7 +131,7 @@ Generate a tree file
       publishDir "${params.outdir}/${params.project}/pdf", mode:'copy', pattern: '*.pdf'
 
       input:
-      file tree from tree_ch
+      file tree
 
       output:
       file "*.pdf"
@@ -146,4 +140,14 @@ Generate a tree file
       """
       figtree -graphic PDF "$tree" "${params.project}".bestTree.pdf
       """
+  }
+
+
+  fasta_ch = Channel.fromPath(params.fasta)
+   .ifEmpty { exit 1, "Cannot find the input fasta file matching: ${params.fasta}." }
+
+  workflow {
+     fasta_ch | msa
+     msa.out | build_tree
+     build_tree.out | write_tree_in_pdf
   }
