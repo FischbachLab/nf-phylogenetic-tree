@@ -1,6 +1,6 @@
 NAME=nf-figtree
 TAG:=$(shell /bin/date +%Y%m%d%H%M%S)
-REGISTRY=fischbachlab/$(NAME)
+REGISTRY=458432034220.dkr.ecr.us-west-2.amazonaws.com/$(NAME)
 
 all: build push run
 

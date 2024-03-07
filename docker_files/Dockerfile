@@ -14,8 +14,9 @@ RUN conda config --env --append channels anaconda
 RUN conda config --env --append channels conda-forge
 RUN conda config --env --append channels bioconda
 
+# install 'ps' required by nextflow
+#RUN apt-get update && apt install -y procps && apt-get clean
 # Install software
-
 RUN conda install -y figtree=1.4.4 pdftotext pdftopng
 
 RUN mkdir -p /work
