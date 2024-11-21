@@ -11,9 +11,10 @@ README
 
 3. Write the tree in pdf (https://github.com/rambaut/figtree)
 
->Note: Replace characters in headers such as space, *, and | to make them valid sequence header.
+== Sequence header format ==
+>Note: Replace illegal characters in headers to make them valid sequence header.
 >
-> ==Illegal characters in headers are: tabulators, carriage returns, spaces, ":", ",", ")", "(", ";", "]", "[", "'" ==
+> Illegal characters in headers are: tabulators, carriage returns, spaces, ":", ",", ")", "(", ";", "]", "[", "'" 
 >
 > hint: tr -d '[:\,)(;\[\]]'\''') ( tr deletes the specified characters above, including the single quote, from the input string)
 
