@@ -11,7 +11,7 @@ README
 
 3. Write the tree in pdf (https://github.com/rambaut/figtree)
 
-== Sequence header format ==
+==Sequence header format==
 >Note: Replace illegal characters in headers to make them valid sequence header.
 >
 > Illegal characters in headers are: tabulators, carriage returns, spaces, ":", ",", ")", "(", ";", "]", "[", "'" 
