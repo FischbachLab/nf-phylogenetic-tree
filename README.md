@@ -3,13 +3,19 @@ README
 
 ## A pipeline for building a phylogenetic tree from the full length 16S sequences
 
-## References:
+## The pipeline contains three steps.
 
-http://mafft.cbrc.jp/alignment/software/
+1. Multiple sequence alignment (http://mafft.cbrc.jp/alignment/software/)
 
-http://sco.h-its.org/exelixis/web/software/raxml/hands_on.html
+2. Phylogenetic Analysis & generate the phylogenetic tree (http://sco.h-its.org/exelixis/web/software/raxml/hands_on.html)
 
-https://github.com/rambaut/figtree
+3. Write the tree in pdf (https://github.com/rambaut/figtree)
+
+>Note: Replace characters in headers such as space, *, and | to make them valid sequence header.
+>
+> ==Illegal characters in headers are: tabulators, carriage returns, spaces, ":", ",", ")", "(", ";", "]", "[", "'" ==
+>
+> hint: tr -d '[:\,)(;\[\]]'\''') ( tr deletes the specified characters above, including the single quote, from the input string)
 
 
 ## A sample batch submission script
@@ -19,9 +25,9 @@ aws batch submit-job \
   --job-name nf-phylogenetic-tree \
   --job-queue priority-maf-pipelines \
   --job-definition nextflow-production \
-  --container-overrides command="s3://nextflow-pipelines/nf-phylogenetic-tree, \
+  --container-overrides command="FischbachLab/nf-phylogenetic-tree, \
 "--project", "TEST", \
-"--fasta", "s3://genomics-workflow-core/Results/phylogenetic_tree/3B.fasta", \
+"--fasta", "s3://genomics-workflow-core/Results/phylogenetic_tree/inputs/3B.fasta", \
 "--outdir", "s3://genomics-workflow-core/Results/phylogenetic_tree" "
 ```
 
